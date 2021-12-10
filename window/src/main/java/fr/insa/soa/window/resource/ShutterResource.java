@@ -44,6 +44,7 @@ public class ShutterResource {
 	@PutMapping("/")
 	public void updateShutter(@RequestBody Shutter shutter) {
 		this.shutter.setOrder(shutter.getOrder());
+		this.shutter.setCurrentOpening(shutter.getCurrentOpening()); 
 	}
 	
 	

@@ -21,6 +21,7 @@ public class Shutter {
 
 	public void setCurrentOpening(double currentOpening) {
 		this.currentOpening = currentOpening;
+		System.out.println("je suis dans un shutter"+currentOpening);
 	}
 
 	public double getOrder() {
