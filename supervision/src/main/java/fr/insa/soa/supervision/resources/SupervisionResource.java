@@ -25,6 +25,7 @@ public class SupervisionResource {
 	private final String shutterURI= "http://localhost:4202/shutter/";
 	private final String C02URI= "http://localhost:4203/C02/" ; 
 	private final String MoveURI= "http://localhost:4205/movement/" ; 
+	private final String TemperatureURI= "http://localhost:4206/temperature/" ; 
 	
 	
 	// Donner Heure  
@@ -35,6 +36,8 @@ public class SupervisionResource {
 		calendar.setTime(date);   // assigns calendar to given date 
 		return calendar.get(Calendar.HOUR_OF_DAY); // gets hour in 24h format
 	}
+	
+	int nowTime = getTime() ; 
 	
 	
 //----------------Scénario 1 - Luminosité et Volet ------------------------------------------------------------------
@@ -125,8 +128,6 @@ public class SupervisionResource {
 
 //-------Scénario 3 -  Une personne entre dans une salle, le capteur de présence la détecte, la lumière s’allume automatiquement. --------------------------
 	
-	int nowTime = getTime() ; 
-	
 	@GetMapping("/run3")
 	public String run3() {
 		RestTemplate restTemplate = new RestTemplate(); 
@@ -154,13 +155,36 @@ public class SupervisionResource {
 			msg += "<p> Aucune présence à l'horizon   -> On éteint les lumières et on repars dodo :) ! </p>"; 
 			msg += "<p> Lumière : OFF </p>";
 		}
-		
 		return msg ; 
 
 	}
 //-------------------------------------------------------------------------------------------------------------------------
 
 
-	//-------Scénario 4 -  --------------------------
+//----------Scénario 4 - Température   ---------------------------------------------------------------------------------------
+	@GetMapping("/run4")
+	public String run4() {
+		
+		RestTemplate restTemplate = new RestTemplate(); 
+			
+		String msg=""; 
+		
+		// Récupération de la temperature
+		int Temperature = restTemplate.getForObject(TemperatureURI + "idValue", Integer.class);
+		msg += "<p> --- <strong>  Valeur de la température </strong> : " + Temperature + "  </p>" ;
+		
+		// Si la temperature est en dessous de 16 degré 
+		if( Temperature <16) {
+			msg +=" <p> | <strong> Activer </strong> le chauffage </p>";	
+		} else if ( Temperature >= 16 && Temperature <23.5) {
+			msg +=" <p> |  On est en <strong> température ambiante </strong> </p>";
+		} else {
+			msg +=" <p> | Activer la <strong>climatisation </strong> </p>";
+		}
+		return msg ; 
+	}
+	
+	
+
 	
 }
