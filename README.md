@@ -1,6 +1,8 @@
 # SOA_Project
-<<<<<<< HEAD
-=======
 
->>>>>>> 7961563fa30382297a94bfe44322a26da6ed1357
-test
+- Récupérer le dépot git 
+- Importer le dossier entier sur eclipse en existing maven 
+- Attendre en peu que tout se mette en place 
+- Puis tester directement 
+
+
