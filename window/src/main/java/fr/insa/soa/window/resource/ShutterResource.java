@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+
 import fr.insa.soa.window.controller.Shutter;
 
 @RestController
@@ -15,37 +16,43 @@ import fr.insa.soa.window.controller.Shutter;
 
 public class ShutterResource {
 	
-	private Shutter shutter = new Shutter(0.5,1.0) ; 
+	private Shutter shutter = new Shutter(0) ; 
 	
 	@GetMapping("/") 
 	public Shutter getShutter() {
 		return shutter ; 
 	}
 	
-	@GetMapping("/status")
-	public String getStatus() {
-		if(shutter.isMoving()) return "moving from " + shutter.getCurrentOpening() + " to "+ shutter.getOrder() ; 
-		if(shutter.getCurrentOpening() > 0 ) return "open" ;
-		return "closed" ; 
+	@GetMapping("/idValue")
+	public int getVolet() {
+		return shutter.getVolet() ; 
 	}
 	
-	@GetMapping("/opening")
-	public double getOpening(@RequestParam(name="unit", required=false) String unit) {
-		if (unit == null || unit.equals("decimal")) return shutter.getCurrentOpening(); 
-		if (unit.equals("percent")) return shutter.getCurrentOpening()*100;
-		return -1 ; 
+	@GetMapping("/status")
+	public String getStatus() {
+		String msg = ""; 
+		if(shutter.getVolet()==1) {
+			msg += " <p> Volet <strong> ouvert </strong>"; 
+		} else if ( shutter.getVolet()==0) {
+			msg += " <p> Volet <strong> fermé </strong> "; 
+		}else {
+			msg += " <p> Volet <strong> ouvert à moitié </strong>" ; 
+		}
+		return msg ; 
 	}
 	
 	@PostMapping("/order")
-	public void setOrder(@RequestParam double value) {
-		shutter.setOrder(value); 
+	public void setOrder(@RequestParam int value) {
+		shutter.setVolet(value); 
+		System.out.println(" New value = " + value) ; 
 	}
 	
 	@PutMapping("/")
-	public void updateShutter(@RequestBody Shutter shutter) {
-		this.shutter.setOrder(shutter.getOrder());
-		this.shutter.setCurrentOpening(shutter.getCurrentOpening()); 
+	public void updateAlarme(@RequestBody Shutter shutter){
+		this.shutter.setVolet(shutter.getVolet()); 
 	}
+	
+	
 	
 	
 	

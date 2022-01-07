@@ -1,4 +1,4 @@
-package fr.insa.soa.alarme.resource;
+package fr.insa.soa.door.resource;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,44 +8,47 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import fr.insa.soa.alarme.model.Alarme;
+
+import fr.insa.soa.door.model.Door;
 
 
 
-@RestController 
-@RequestMapping("/alarme")
-
-public class AlarmeResource {
+@RestController
+@RequestMapping("/porte")
+public class DoorResource {
 	
-	Alarme al = new Alarme(0,true) ; 
+	Door porte = new Door(1); 
 	
-
-	@GetMapping("/all") 
-	public Alarme getAlarme() {
-		return al ; 
+	@GetMapping("/all")
+	public Door getDoor() {
+		return porte; 
 	}
-
+	
 	@GetMapping("/idValue")
 	public int test() {
-		return al.getAlarm() ; 
+		return porte.getPorte(); 
+	}
+	
+	@GetMapping("/status")
+	public String getStatus() {
+		if(porte.getPorte() == 1) {
+			return " <p>  Porte <strong> bloquée </strong> </p> " ; 
+		}else {
+			return " <p> Porte <strong> ouverte </strong> </p> " ; 
+		} 
 	}
 	
 	@PostMapping("/order")
 	public void setOrder(@RequestParam int value) {
-		al.setAlarm(value); 
+		porte.setPorte(value); 
 		System.out.println(" New value = " + value) ; 
 	}
 	
 	@PutMapping("/")
-	public void updateAlarme(@RequestBody Alarme al) {
-		this.al.setAlarm(al.getAlarm()) ; 
+	public void updateAlarme(@RequestBody Door porte) {
+		this.porte.setPorte(porte.getPorte()) ; 
 	}
 	
 	
-	
-	
-	
-}
-		
-		
 
+}

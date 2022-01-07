@@ -3,47 +3,22 @@ package fr.insa.soa.window.controller;
 
 public class Shutter {
 	
-	private double currentOpening ; 
-	private double order ; 
-	private boolean isMoving ; 
+	private int volet ; 
 	
 	public Shutter() {}
 	
-	public Shutter(double currentOpening, double order) {
-		this.currentOpening = currentOpening ; 
-		this.order = order ; 
-		updateIsMoving(); 
+	public Shutter(int volet) {
+		this.volet=volet; 
 	}
 
-	public double getCurrentOpening() {
-		return currentOpening;
+	public int getVolet() {
+		return volet;
 	}
 
-	public void setCurrentOpening(double currentOpening) {
-		this.currentOpening = currentOpening;
-		System.out.println("je suis dans un shutter"+currentOpening);
-	}
-
-	public double getOrder() {
-		return order;
-	}
-
-	public void setOrder(double order) {
-		this.order = order;
-	}
-
-	public boolean isMoving() {
-		return isMoving;
-	}
-
-	public void setMoving(boolean isMoving) {
-		this.isMoving = isMoving;
-		
+	public void setVolet(int volet) {
+		this.volet = volet;
 	}
 	
-	private void updateIsMoving() {
-		this.isMoving= !(this.order == this.currentOpening); 
-	}
 	
 	
 }

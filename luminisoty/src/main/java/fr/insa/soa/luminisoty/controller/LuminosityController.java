@@ -12,6 +12,8 @@ public class LuminosityController {
 	
 	@GetMapping("/idValue")
 	public int ValueLuminosity() {
-		return (int)(Math.random()*100);
+		return (int)(Math.random()*1000);
 	}
+	
+	
 }
